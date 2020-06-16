@@ -1,20 +1,24 @@
 from DogBreedsApp import app
 import json, plotly
-from flask import render_template
-#from wrangling_scripts.wrangle_data import return_figures
+from flask import render_template, request
+import classifier_functions as clf
 
 @app.route('/')
 @app.route('/index')
 def index():
 
-    figures = []
-
-    # plot ids for the html id tag
-    ids = ['figure-{}'.format(i) for i, _ in enumerate(figures)]
-
-    # Convert the plotly figures to JSON for javascript in html template
-    figuresJSON = json.dumps(figures, cls=plotly.utils.PlotlyJSONEncoder)
+    message = 'Hello World!'
 
     return render_template('index.html',
-                           ids=ids,
-                           figuresJSON=figuresJSON)
+                           message = message)
+
+@app.route('/', methods=['POST'])
+def form_post():
+    text = request.form['text']
+    img_path = text
+    isHuman = clf.face_detector(img_path)
+    if isHuman:
+        message = 'I think this is a human.'
+    else:
+        message = 'I do not think this is a human.'
+    return render_template('index.html', message=message, img_path=img_path)
