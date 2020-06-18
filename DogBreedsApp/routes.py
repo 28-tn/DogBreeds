@@ -17,8 +17,13 @@ def form_post():
     text = request.form['text']
     img_path = text
     isHuman = clf.face_detector(img_path)
-    if isHuman:
-        message = 'I think this is a human.'
+    isDog = clf.dog_detector(img_path)
+    if isDog:
+        breed = clf.predict_breed(img_path)
+        message = 'I think this is a {}'.format(breed)
+    elif isHuman:
+        breed = clf.predict_breed(img_path)
+        message = 'I think this is a human, but it bears a certain resemblance with {}'.format(breed)
     else:
-        message = 'I do not think this is a human.'
+        message = 'This is neither a dog nor a human.'
     return render_template('index.html', message=message, img_path=img_path)
