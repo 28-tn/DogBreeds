@@ -25,12 +25,16 @@ from extract_bottleneck_features import extract_Resnet50
 ResNet50_model = ResNet50(weights='imagenet')
 
 def path_to_tensor(img_path):
+    '''
+    Downloads image from URL given in img_path,
+    resizes the image to 224x224 pixels and
+    converts it to a numpy array
+    '''
     req = urllib.request.urlopen(img_path)
     arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
-    img = cv2.imdecode(arr, -1) # 'Load it as it is'
+    img = cv2.imdecode(arr, -1)
     
     # loads RGB image as PIL.Image.Image type
-    #img = image.load_img(img_path, target_size=(224, 224))
     img = PIL.Image.fromarray(img)
     img = img.resize((224,224))
     # convert PIL.Image.Image type to 3D tensor with shape (224, 224, 3)
@@ -38,17 +42,17 @@ def path_to_tensor(img_path):
     # convert 3D tensor to 4D tensor with shape (1, 224, 224, 3) and return 4D tensor
     return np.expand_dims(x, axis=0)
 
-def paths_to_tensor(img_paths):
-    list_of_tensors = [path_to_tensor(img_path) for img_path in tqdm(img_paths)]
-    return np.vstack(list_of_tensors)
-
 def ResNet50_predict_labels(img_path):
-    # returns prediction vector for image located at img_path
+    '''
+    returns prediction vector for image located at img_path
+    '''
     img = preprocess_input(path_to_tensor(img_path))
     return np.argmax(ResNet50_model.predict(img))
 
-### returns "True" if a dog is detected in the image stored at img_path
 def dog_detector(img_path):
+    '''
+    returns "True" if a dog is detected in the image stored at img_path
+    '''
     prediction = ResNet50_predict_labels(img_path)
     return ((prediction <= 268) & (prediction >= 151)) 
 
@@ -59,10 +63,12 @@ def dog_detector(img_path):
 face_cascade = cv2.CascadeClassifier('/home/tn/Python/DataScienceNano/DogBreeds/haarcascades/haarcascade_frontalface_alt.xml')
 
 def face_detector(img_path):
-    #img = cv2.imread(img_path)
+    '''
+    returns True if a human face is detected in the image stored at img_path
+    '''
     req = urllib.request.urlopen(img_path)
     arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
-    img = cv2.imdecode(arr, -1) # 'Load it as it is'
+    img = cv2.imdecode(arr, -1)
     
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray)
@@ -220,6 +226,9 @@ dog_names = ['ages/train/001.Affenpinscher',
  'ages/train/133.Yorkshire_terrier']
 
 def predict_breed(img_path):
+    '''
+    Predicts the dog breed present in the picture
+    '''
     # extract bottleneck features
     bottleneck_feature = extract_Resnet50(path_to_tensor(img_path))
     # obtain predicted vector
