@@ -4,6 +4,12 @@ This project is my capstone project for the [Udacity](www.udacity.com) Data-Scie
 ## Project Overview
 The Jupyter notebook dog_app.ipynb walks you through the process of data exploration and the development of several neural networks for predicting the dog breed. After executing all cells in the notebook, you can start the web-app by running "python dogbreeds.py". The app is then ready to be opened in a browser at "127.0.0.1:3001".
 
+In the app you can drop a URL to the picture you would like to analyse:
+![Example 1](Example1.png)
+
+This also works for humans:
+![Example 2](Example2.png)
+
 ## Project Instructions
 
 ### Installation
