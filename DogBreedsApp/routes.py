@@ -1,21 +1,19 @@
 from DogBreedsApp import app
-import json, plotly
 from flask import render_template, request
 import classifier_functions as clf
 
 @app.route('/')
 @app.route('/index')
 def index():
-
-    message = 'Hello World!'
-
-    return render_template('index.html',
-                           message = message)
+    return render_fun()
 
 @app.route('/', methods=['POST'])
 def form_post():
     text = request.form['text']
     img_path = text
+    return render_fun(img_path)
+
+def render_fun(img_path='https://upload.wikimedia.org/wikipedia/commons/0/03/Kurzhaardackel.jpg'):
     isHuman = clf.face_detector(img_path)
     isDog = clf.dog_detector(img_path)
     if isDog:
