@@ -2,7 +2,7 @@
 This project is my capstone project for the [Udacity](www.udacity.com) Data-Science NanoDegree. The goal is to develop an algorithm which is able to predict the dog breed present in a picture and deploy it into a web-app. In addition the algorithm should detect humans and return a dog breed which resembles them most.
 
 ## Project Overview
-The Jupyter notebook dog_app.ipynb walks you through the process of data exploration and the development of several neural networks for predicting the dog breed. After executing all cells in the notebook, you can start the web-app by running "python dogbreeds.py". The app is then ready to be opened in a browser at "127.0.0.1:3001".
+The Jupyter notebook dog_app.ipynb is based on a notebook provided by Udacity. It walked me (and will also walk you) through the process of data exploration and the development of several neural networks for predicting the dog breed. After executing all cells in the notebook, you can start the web-app by running "python dogbreeds.py". The app is then ready to be opened in a browser at "127.0.0.1:3001".
 
 In the app you can drop a URL to the picture you would like to analyse:
 ![Example 1](Example1.png)
