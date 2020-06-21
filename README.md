@@ -10,9 +10,24 @@ The Jupyter notebook dog_app.ipynb is based on a notebook provided by Udacity. I
 >This also works for humans:
 ![Example 2](Example2.png) 
 
-## Project Instructions
+## Analysis and Methodology
+This project uses a [set of pictures with human faces](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/lfw.zip) as well as a [set of dog pictures](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/dogImages.zip) labeled with the according breeds. Based on this training data several machine learning models are built.
+* A pre-trainend Haar feature-based cascade classifier from OpenCV is used to detect human faces
+* A pre-trained [ResNet-50 model](http://ethereon.github.io/netscope/#/gist/db945b393d40bfa26006) is used to detect images with dogs.
 
-### Installation
+In the project three different models for the classification of dog breeds have been developed. The first model is a CNN (built from scratch) consisting of 4 consecutive convolutional layers, each followed by a MaxPooling layer. After flattening the output of the last MaxPooling Layer, a final Dense layer with softmax activation function determines the final output of the model. After training the model it achieves an accuracy of **7.3%** on the test set. This result is actually quite good, taking into account that there are 133 distinct labels (i.e. dog breeds)!
+
+A huge improvement is achieved by the second model using transfer learning. This model uses a pre-trained VGG-16 model and just adds a GlobalAveragePooling layer and a final Dense layer. Making use of the pre-trained layers of the VGG-16 model, which already can detect useful patterns in the images, this model achieves an accuracy of **44.7%** on the test data.
+
+The third model also uses transfer learning but instead of the VGG-16 model it is based on a pre-trained Resnet50 model. By adding a GlobalAveragePooling layer and a BatchNormalization layer (to avoid overfitting) before the final Dense layer, this model achieves an accuracy of **79.8%** on the test data!
+
+In combination with the human face detector and the dog detector, this third model is utilized in the final image processing algorithm. This algorithm is then implemented in the web-app.
+
+## Conclusion
+The comparison of the three models clearly shows the huge benefits of transfer learning when it comes to image classification tasks. The pre-trained VGG-16 and Resnet-50 models boost the performance of the resulting models, because they have been trained on very large sets of training data. These large sets of training data allow them to develop efficient ways of recognizing useful patterns in the images.
+
+
+## Installation Instructions
 
 1. Clone the repository and navigate to the downloaded folder.
 ```	
